@@ -206,5 +206,141 @@ CREATE TABLE Pagamentos (
     FOREIGN KEY (ID_Pedido) REFERENCES Pedido(ID_Pedido)
 );
 ```
+**5 - Inserção de Dados**
+
+## Inserção de dados nas tabelas
+Para inserir dados nas tabelas Utilizase o comando ```INSERT INTO (nome da tabela) ``` exemplo:
+```
+-- Inserindo dados na tabela Manga
+INSERT INTO Manga (ID_Manga, Titulo, Autor, Editora, Genero, Preço, Qtd) VALUES
+    (1, 'Attack on Titan', 'Hajime Isayama', 'Panini', 'Ação', '35.00', 50),
+    (2, 'One Piece', 'Eiichiro Oda', 'Panini', 'Aventura', '30.00', 100),
+    (3, 'My Hero Academia', 'Kohei Horikoshi', 'Panini', 'Shonen', '28.00', 75),
+    (4, 'Demon Slayer', 'Koyoharu Gotouge', 'Panini', 'Ação', '32.00', 60),
+    (5, 'Naruto', 'Masashi Kishimoto', 'Panini', 'Shonen', '25.00', 120),
+    (6, 'Bleach', 'Tite Kubo', 'Panini', 'Ação', '27.00', 80),
+    (7, 'Jujutsu Kaisen', 'Gege Akutami', 'Panini', 'Sobrenatural', '30.00', 55),
+    (8, 'Tokyo Ghoul', 'Sui Ishida', 'Panini', 'Terror', '29.00', 45),
+    (9, 'Fullmetal Alchemist', 'Hiromu Arakawa', 'Panini', 'Fantasia', '33.00', 65),
+    (10, 'Death Note', 'Tsugumi Ohba', 'Panini', 'Suspense', '26.00', 90),
+    (11, 'Hunter x Hunter', 'Yoshihiro Togashi', 'Panini', 'Aventura', '31.00', 50),
+    (12, 'Dragon Ball', 'Akira Toriyama', 'Panini', 'Ação', '24.00', 150),
+    (13, 'Yu-Gi-Oh!', 'Kazuki Takahashi', 'Panini', 'Jogo', '28.00', 70),
+    (14, 'Fairy Tail', 'Hiro Mashima', 'Panini', 'Fantasia', '29.00', 60),
+    (15, 'Black Clover', 'Yuki Tabata', 'Panini', 'Fantasia', '30.00', 55),
+    (16, 'The Promised Neverland', 'Kaiu Shirai', 'Panini', 'Terror', '32.00', 45),
+    (17, 'Dr. Stone', 'Riichiro Inagaki', 'Panini', 'Aventura', '27.00', 65),
+    (18, 'Chainsaw Man', 'Tatsuki Fujimoto', 'Panini', 'Terror', '31.00', 50),
+    (19, 'Made in Abyss', 'Akihito Tsukushi', 'Panini', 'Aventura', '28.00', 40),
+    (20, 'Vinland Saga', 'Makoto Yukimura', 'Panini', 'Histórico', '33.00', 35);
+```
+E foi utilizando desse metodo que eu inseri os dados de todas as tabelas. Não vou colocar aqui porque é mais do mesmo.
+
+** 6 - CRUD 
+## Create Read Update Delete 
+Nessa parte eu vou fazer uma pequena demonstração de um CRUD que é basicamente criar ler atualizar e deletar vou fazer esses 4 passos dentro do meu banco de dados.
+
+## CREATE
+```
+INSERT INTO Manga (ID_Manga, Titulo, Autor, Editora, Genero, Preço, Qtd) VALUES
+    (21, 'INITAL D', 'Nakamura hikaru', 'Panini', 'Ação', '32.00', 50);
+```
+
+![print create (crud)](https://github.com/hugozera1/sqlseinen/assets/161486790/f89387d6-b575-492c-aed9-2462650a29b1)
+
+## READ
+```
+use SEINENJUMP;
+SELECT * FROM Manga WHERE Genero = 'Ação';
+```
+
+![print read (crud)](https://github.com/hugozera1/sqlseinen/assets/161486790/80d085b3-59d4-4f37-b79d-f34eff7670cb)
+
+## UPDATE
+```
+UPDATE Manga SET Preço = '38.00' WHERE ID_Manga = 21;
+```
+
+![print upddate (crud)](https://github.com/hugozera1/sqlseinen/assets/161486790/2301186d-7295-4c95-b1a5-7a29551e13d1)
+
+## DELETE
+```
+DELETE FROM Manga WHERE ID_Manga = 21;
+```
+
+![delete crud ](https://github.com/hugozera1/sqlseinen/assets/161486790/5a51db4a-881a-4dfe-a934-f4edf5f6fe94)
+
+**7 - Relatorios**
+## RELATORIO DO BANCO DE DADOS
+
+Relatorio de consultas, nessa seção vai ser mostrado 10 consultas presentes no meu banco de dados
+
+ **1.  Listar todos os mangás com seus autores e editoras:**
+```
+SELECT Titulo AS Manga, Autor, Editora
+```
+![select1](https://github.com/hugozera1/sqlseinen/assets/161486790/890b82d3-1bae-4c2a-846f-4170ff989c6d)
+
+**2. Mostrar os pedidos realizados por cada cliente com seus nomes e emails:**
+```
+SELECT Cliente.Nome, Cliente.Email, Pedido.ID_Pedido, Pedido.Data_Pedido
+FROM Cliente
+JOIN Pedido ON Cliente.ID_Cliente = Pedido.ID_Cliente;
+```
+
+![select2](https://github.com/hugozera1/sqlseinen/assets/161486790/6516bc89-4e9a-42a2-84d4-3b6c7f957018)
 
 
+**3. Encontrar os mangás com preço maior que R$ 30,00 e ordená-los por preço decrescente:**
+```
+----SELECT 3
+SELECT Titulo, Preço 
+FROM Manga
+WHERE CAST(REPLACE(Preço, ',', '.') AS DECIMAL) > 30.00
+ORDER BY Preço DESC;
+---
+
+```
+
+![select3](https://github.com/hugozera1/sqlseinen/assets/161486790/a114922f-caac-4db2-9649-ba1decb10efa)
+
+**4. Exibir os clientes que fizeram pedidos em uma data específica:**
+```
+---SELECT 4
+SELECT Cliente.Nome, Cliente.Email 
+FROM Cliente
+JOIN Pedido ON Cliente.ID_Cliente = Pedido.ID_Cliente
+WHERE Pedido.Data_Pedido = '2023-04-01';
+select * from Manga
+----
+```
+![select4](https://github.com/hugozera1/sqlseinen/assets/161486790/f1cdc6c9-65ca-4bbf-a4dc-658f66e2c09c)
+
+
+**5. Listar os itens de um pedido específico (ex: ID_Pedido = 5):**
+```
+---SELECT 5
+SELECT Item_Pedido.Qtd, Item_Pedido.Preço_Unidade, Manga.Titulo
+FROM Item_Pedido
+JOIN Manga ON Item_Pedido.ID_Manga = Manga.ID_Manga
+WHERE Item_Pedido.ID_Pedido = 5;
+---
+```
+
+![select5](https://github.com/hugozera1/sqlseinen/assets/161486790/fed34e92-ec55-4a38-8550-7a0407086a1e)
+
+**6. Mostrar os mangás com a maior quantidade em estoque, ordenados por quantidade:**
+```
+---SELECT 6
+SELECT Titulo, Qtd
+FROM Manga
+ORDER BY Qtd DESC
+----
+```
+
+![select6](https://github.com/hugozera1/sqlseinen/assets/161486790/27b41728-072d-4c74-97ba-9b2f9189adce)
+
+**7. Buscar os clientes que fizeram pedidos de mangás de um gênero específico (ex: "Ação"):**
+```
+
+```
