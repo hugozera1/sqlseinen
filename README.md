@@ -342,5 +342,63 @@ ORDER BY Qtd DESC
 
 **7. Buscar os clientes que fizeram pedidos de mangás de um gênero específico (ex: "Ação"):**
 ```
+----SELECT 7
+SELECT DISTINCT Cliente.Nome
+FROM Cliente
+JOIN Pedido ON Cliente.ID_Cliente = Pedido.ID_Cliente
+JOIN Item_Pedido ON Pedido.ID_Pedido = Item_Pedido.ID_Pedido
+JOIN Manga ON Item_Pedido.ID_Manga = Manga.ID_Manga
+WHERE Manga.Genero = 'Ação';
+----
 
 ```
+![select7](https://github.com/hugozera1/sqlseinen/assets/161486790/48ba23d7-2a45-49f0-974f-b06370ad81f2)
+
+
+**8. Mostrar o total de cada tipo de pagamento realizado:**
+```
+----SELECT 8
+SELECT Tipo_Pagamento, COUNT(*) AS Total_Pagamentos
+FROM Pagamentos
+GROUP BY Tipo_Pagamento;
+-----
+```
+![select8](https://github.com/hugozera1/sqlseinen/assets/161486790/798636fd-bc7a-4b55-a996-2e84573e474c)
+
+**9. Encontrar os mangás mais populares (com a maior quantidade de itens comprados):**
+```
+----SELECT 9
+SELECT Manga.Titulo, SUM(Item_Pedido.Qtd) AS Total_Itens_Vendidos
+FROM Manga
+JOIN Item_Pedido ON Manga.ID_Manga = Item_Pedido.ID_Manga
+GROUP BY Manga.Titulo
+ORDER BY Total_Itens_Vendidos DESC
+----
+```
+![select9](https://github.com/hugozera1/sqlseinen/assets/161486790/62061691-7982-4552-a0bd-762fcdafd4ed)
+
+** 10. Retorna informações detalhadas sobre pedidos, incluindo dados do cliente, data do pedido, valor total, mangás comprados, quantidade e preço unitário.**
+```
+----SELECT 10
+SELECT 
+    Cliente.Nome AS Cliente,
+    Cliente.Email AS Email_Cliente,
+    Pedido.Data_Pedido AS Data_do_Pedido,
+    Pedido.Total AS Valor_Total_do_Pedido,
+    Manga.Titulo AS Manga,
+    Item_Pedido.Qtd AS Quantidade_de_Mangas,
+    Item_Pedido.Preço_Unidade AS Preco_Unitario
+FROM 
+    Cliente
+JOIN 
+    Pedido ON Cliente.ID_Cliente = Pedido.ID_Cliente
+JOIN 
+    Item_Pedido ON Pedido.ID_Pedido = Item_Pedido.ID_Pedido
+JOIN 
+    Manga ON Item_Pedido.ID_Manga = Manga.ID_Manga;
+----
+----
+```
+
+![select10](https://github.com/hugozera1/sqlseinen/assets/161486790/9c1191a4-8f6f-4244-86c3-a2a8a69e80e9)
+
